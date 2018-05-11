@@ -76,7 +76,6 @@ var bundle = d3.radialLine()
 			.radius(function(d){ return d.y; })
 			.angle(function(d){ return d.x /180 * Math.PI; })// angle : 0 -> -y方向 (12 o'clock)
 
-<<<<<<< HEAD
 var link = svg.append("g").selectAll(".link");
 var node = svg.append("g").selectAll(".node");
 
@@ -95,4 +94,3 @@ d3.json("flare.json", function(error, data){
 </script>	
 </body>
 </html>
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23

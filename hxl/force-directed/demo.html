@@ -29,14 +29,7 @@
         .append("svg")
           .attr("width", width)
           .attr("height", height);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     //设置力场中的力
-=======
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
-=======
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
     var simulation = d3.forceSimulation()
         .force("fl", d3.forceLink().id(function(d){ return d.id; }) )//link
         .force("fcl", d3.forceCollide().radius(2).strength(0.7))//collide
@@ -85,31 +78,16 @@
       // node.append("title")
       //     .text(function(d) { return d.id; });
 
-
-
       console.log(text);
       console.log(graph.nodes);
       console.log(node);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
       //将力场中的节点绑定到节点上去
       simulation.nodes(graph.nodes)
                 .on("tick", ticked);
 
       //将力场中的link力绑定到link上去
-=======
       simulation.nodes(graph.nodes)
                 .on("tick", ticked);
-
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
-=======
-      simulation.nodes(graph.nodes)
-                .on("tick", ticked);
-
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
-      simulation.force("fl")
-                .links(graph.links);
 
       function ticked(){
         link.attr("x1", function(d){ return d.source.x; })

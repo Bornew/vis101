@@ -66,15 +66,7 @@
 		//2. 转换数据
 		var cluster = d3.layout.cluster()
 						.size([360, width/2 - 50])
-<<<<<<< HEAD
-<<<<<<< HEAD
 						.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });//??
-=======
-						.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
-=======
-						.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
->>>>>>> d1aa1baa51d08907c436750978db56d870437c23
 
 		var bundle = d3.layout.bundle();				
 
