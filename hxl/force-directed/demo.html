@@ -48,6 +48,19 @@
           .enter()
           .append("line")
           .attr("stroke-width", function(d){ return Math.sqrt(d.value) ; });         
+
+      var text = svg.append("g")
+          .selectAll("text")
+          .data(graph.nodes)
+          .enter()
+          .append("text")
+          // .style("fill", "black")
+          .attr("dx", 10)
+          .attr("dy", 5)
+          .text(function(d){
+            return d.id
+          });
+
       var node = svg.append("g")
             .attr("class", "nodes")
           .selectAll("circle")
@@ -65,17 +78,7 @@
       // node.append("title")
       //     .text(function(d) { return d.id; });
 
-      var text = svg.append("g")
-          .selectAll("text")
-          .data(graph.nodes)
-          .enter()
-          .append("text")
-          // .style("fill", "black")
-          .attr("dx", 10)
-          .attr("dy", 5)
-          .text(function(d){
-            return d.id
-          });
+
 
       console.log(text);
       console.log(graph.nodes);
