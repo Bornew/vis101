@@ -78,11 +78,14 @@ d3.json("flare.json", function(error, classes) {
   var root = packageHierarchy(classes)
       .sum(function(d) { return d.size; });
 
+  // console.log(root);
   cluster(root);
+  // console.log(root);
 
   link = link
     .data(packageImports(root.leaves()))
     .enter().append("path")
+      // https://github.com/d3/d3-hierarchy/blob/master/README.md#node_each
       .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
       .attr("class", "link")
       .attr("d", line);
@@ -144,7 +147,8 @@ function packageHierarchy(classes) {
   classes.forEach(function(d) {
     find(d.name, d);
   });
-
+  console.log(map);
+  console.log(map[""]);
   return d3.hierarchy(map[""]);
 }
 
@@ -161,10 +165,14 @@ function packageImports(nodes) {
   // For each import, construct a link from the source to target node.
   nodes.forEach(function(d) {
     if (d.data.imports) d.data.imports.forEach(function(i) {
-      imports.push(map[d.data.name].path(map[i]));
+      imports.push( map[d.data.name].path(map[i]) );
+      // console.log(map[d.data.name] );
+      // https://github.com/d3/d3-hierarchy/blob/master/README.md#node_path
     });
+  // console.log(map);
   });
-
+  // console.log(map);
+  // console.log(imports);
   return imports;
 }
 
