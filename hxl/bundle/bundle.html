@@ -53,9 +53,12 @@
 	<title>Bundle Graph</title>
 </head>
 <body>
+β:
+<input type="range" id="beta" name="beta" min="0" value="0.95" max="1" step="0.01" oninput="betachange(this.value)" >
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript">
 // 定义svg尺寸并创建svg
+var beta = 0.95
 var width = 1280
 var height = 720
 // 定义直径半径
@@ -70,6 +73,7 @@ var svg = d3.select("body")
     .append("g")
       .attr("transform", "translate(" + width/2 + "," + radius + ")");
 
+
 // 定义cluster，使用极坐标
 var cluster = d3.cluster()
 				.size([360, innerRadius])
@@ -79,36 +83,37 @@ var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 // 定义bundle曲线生成器
 var bundle = d3.radialLine()
-			.curve(d3.curveBundle.beta(0.93))
+			.curve(d3.curveBundle.beta(beta))
 			.radius(function(d){ return d.y; })
-			.angle(function(d){ return d.x /180 * Math.PI; })// angle : 0 -> -y方向 (12 o'clock)
+			.angle(function(d){ return d.x /180 * Math.PI; });// angle : 0 -> -y方向 (12 o'clock)
 
-// var link = svg.append("g").selectAll(".link");
-// var node = svg.append("g").selectAll(".node");
+var link = svg.append("g")
+                .attr("class", "link")
+              .selectAll(".link");
+
+var node = svg.append("g")
+                .attr("class", "node")
+              .selectAll(".node");
+
+var root, linkdata;
 
 d3.json("collapsible.json", function(error, data){
 	if (error) { throw error; }
 
-	var link = svg.append("g")
-                  .attr("class", "link")
-                .selectAll(".link");
-
-  var node = svg.append("g")
-                  .attr("class", "node")
-                .selectAll(".node");
-
-  var root = dataProcess(data);
+  root = dataProcess(data);
 
   cluster(root);
 
   // lineGen(root.leaves());
+  linkdata = randomLinks(root.leaves())
   link = link
-    .data(randomLinks(root.leaves()))
+    .data(linkdata)
     .enter()
     .append("path")
     .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
       .attr("class", "link")
       .attr("d", bundle);
+    console.log("link", link);
 
   node = node
     .data(root.leaves())
@@ -180,7 +185,19 @@ d3.json("collapsible.json", function(error, data){
 
 });
 
+function betachange(value){
+  beta = value;
+  document.getElementById('beta').innerHTML = value;
+  // console.log(linkdata);
+  var newbundle = d3.radialLine()
+      .curve(d3.curveBundle.beta(beta))
+      .radius(function(d){ return d.y; })
+      .angle(function(d){ return d.x /180 * Math.PI; });
 
+  link
+      .attr("d", newbundle);
+  console.log(link);
+}
   // function lineGen(nodes) {
   //   console.log("leaves", nodes);
 
