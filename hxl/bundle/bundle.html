@@ -170,7 +170,8 @@ d3.json("collapsible.json", function(error, data){
       for (var i = 0; i < nodes.length; i++){
         backup[i] = i;
       }
-      for(var i = 0; i < randomInt(nodes.length)/100; i++){
+      //link number here controlled
+      for(var i = 0; i < randomInt(nodes.length)/50; i++){
         var index = randomInt(backup.length);
         randint[i] = backup[index];
         backup.splice(index, 1);
@@ -194,9 +195,8 @@ function betachange(value){
       .radius(function(d){ return d.y; })
       .angle(function(d){ return d.x /180 * Math.PI; });
 
-  link
-      .attr("d", newbundle);
-  console.log(link);
+  link.attr("d", newbundle);
+  // console.log(link);
 }
   // function lineGen(nodes) {
   //   console.log("leaves", nodes);
